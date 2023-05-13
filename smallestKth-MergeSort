@@ -1,0 +1,121 @@
+// COPYRIGHTS.© ABANOB AYOUB 
+//Description: 
+//This code uses the mergeSort method to sort the input array, 
+//and then returns the kth smallest element of the sorted array by accessing the element at index k - 1. 
+//The code also includes a check to ensure that k is within the array size. 
+//In this example, the input array is { 12, 3, 5, 7, 19 } and k is 2, so the output will be 2nd smallest element is 5.
+
+package com.mycompany.mersrotmethod;
+import java.util.Scanner;
+import java.util.Random;
+
+
+public class MerSrotMethod {
+    
+    public static int[] generateRandomInput(int sizeLimit){
+        int[] list = new int[sizeLimit];
+        Random random =new Random();
+        for (int i = 0; i < sizeLimit; i++) {
+          list[i]=random.nextInt();
+        }
+        return list;
+    }
+    
+      public static void printInput(int[] a, int r){
+    
+          for(int i=0;i<r;i++){
+      
+        System.out.print(a[i]+" ");
+    }
+    System.out.println("\n");
+  }
+      
+    public static void main(String[] args) {
+        
+        //Getting the size limit of input list
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter an intger list size: ");
+        int r = input.nextInt();
+                
+        //Generate random list input
+        int[] arr = generateRandomInput(r);
+        
+        //Print the input list intgers
+        printInput(arr,r);
+        
+        //Setup the K-th smallest number you want to get
+        int k = 1;
+ 
+        //Start the timer
+        long startTime = System.nanoTime();
+        
+        //Call the Function
+        int kthSmallest = kthSmallest(arr, k);
+        
+        //Stop the timer
+        long endTime = System.nanoTime();
+        
+        //Calculate excution time
+        double executionTimeInSeconds = (endTime - startTime) / 1000000000.0;
+        
+        //Print the result K-th Smallest number
+        System.out.println(k + "th smallest element is " + kthSmallest);
+        
+        //Print excution time    
+        System.out.println("Algorithm Execution Time: " + executionTimeInSeconds + " seconds");
+        
+    }
+    
+    
+        public static int kthSmallest(int[] arr, int k) {
+        // Check if k is within the array size
+        if (k > arr.length) {
+            throw new IllegalArgumentException("k is greater than array size");
+        }
+        
+        // Sort the array using Merge Sort
+        mergeSort(arr, 0, arr.length - 1);
+        
+        // Return the kth smallest element
+        return arr[k - 1];
+    }
+    
+    // Merge Sort algorithm to sort the array
+    private static void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
+        }
+    }
+    
+    // Merge two sorted sub-arrays into a single sorted array
+    private static void merge(int[] arr, int left, int mid, int right) {
+        int[] temp = new int[arr.length];
+        int i = left, j = mid + 1, k = left;
+        
+        while (i <= mid && j <= right) {
+            if (arr[i] <= arr[j]) {
+                temp[k++] = arr[i++];
+            } else {
+                temp[k++] = arr[j++];
+            }
+        }
+        
+        while (i <= mid) {
+            temp[k++] = arr[i++];
+        }
+        
+        while (j <= right) {
+            temp[k++] = arr[j++];
+        }
+        
+        for (i = left; i <= right; i++) {
+            arr[i] = temp[i];
+        }
+    }
+    
+}
+// COPYRIGHTS.© ABANOB AYOUB 
+// COPYRIGHTS.© ABANOB AYOUB 
